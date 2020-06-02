@@ -5,7 +5,7 @@ module.exports = {
     let { mystery_id, rating } = req.body;
 
     const { user_id } = req.headers;
-    if (mystery_id == "" || rating == "") {
+    if (mystery_id == "") {
       return res.json("Why don't you rate this mystery?");
     }
 
@@ -20,6 +20,7 @@ module.exports = {
         user_id,
       });
     }
+
     let msg =
       "Sorry, We could not save your rating. Contact our team for more details.";
     let status = 0;
@@ -56,10 +57,11 @@ module.exports = {
     const total = await Rating.aggregate(aggregatorOpts).exec();
     let ratingSum = 0;
     rate.forEach((element) => {
-      ratingSum = ratingSum + element._id.rating * element.count;
+      if (element._id.rating > 0) {
+        ratingSum = (element.count * 100) / total[0].count;
+      }
     });
     //const item = mystery[Math.floor(Math.random() * mystery.length)];
-    ratingSum = ratingSum / total[0].count;
     return res.json(ratingSum);
   },
 };

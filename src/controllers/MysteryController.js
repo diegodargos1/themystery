@@ -6,7 +6,7 @@ module.exports = {
     title = title.toLowerCase();
     const { user_id } = req.headers;
     if (title == "" || category == "" || mystery == "" || resolution == "") {
-      return res.json("All fields are required!");
+      return res.json({ msg: "All fields are required!" });
     }
 
     const myst = await Mystery.create({
@@ -14,7 +14,7 @@ module.exports = {
       category,
       mystery,
       resolution,
-      user_id
+      user_id,
     });
     let msg =
       "Sorry, We could not save your mystery. Contact our team for more details.";
@@ -30,5 +30,5 @@ module.exports = {
     const mystery = await Mystery.find({});
     const item = mystery[Math.floor(Math.random() * mystery.length)];
     return res.json(item);
-  }
+  },
 };
