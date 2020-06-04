@@ -5,7 +5,8 @@ const MysterySchema = new mongoose.Schema({
   category: String,
   mystery: String,
   resolution: String,
-  user_id: String
+  user_id: String,
+  language: String,
 });
 
 module.exports = mongoose.model("Mystery", MysterySchema);

@@ -4,7 +4,7 @@ module.exports = {
   async store(req, res) {
     let { title, category, mystery, resolution } = req.body;
     title = title.toLowerCase();
-    const { user_id } = req.headers;
+    const { user_id, language } = req.headers;
     if (title == "" || category == "" || mystery == "" || resolution == "") {
       return res.json({ msg: "All fields are required!" });
     }
@@ -15,6 +15,7 @@ module.exports = {
       mystery,
       resolution,
       user_id,
+      language,
     });
     let msg =
       "Sorry, We could not save your mystery. Contact our team for more details.";
@@ -27,7 +28,8 @@ module.exports = {
   },
 
   async show(req, res) {
-    const mystery = await Mystery.find({});
+    const { language } = req.query;
+    const mystery = await Mystery.findOne({ language });
     const item = mystery[Math.floor(Math.random() * mystery.length)];
     return res.json(item);
   },
