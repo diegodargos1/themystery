@@ -29,7 +29,7 @@ module.exports = {
 
   async show(req, res) {
     const { language } = req.query;
-    const mystery = await Mystery.findOne({ language });
+    const mystery = await Mystery.find({ language });
     const item = mystery[Math.floor(Math.random() * mystery.length)];
     return res.json(item);
   },
